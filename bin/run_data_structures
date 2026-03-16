@@ -1,0 +1,13 @@
+#!/bin/bash
+
+JAVA_CMD="java -Xms1G -Xmx1G -cp lib/*.jar data_structures.Main $*"
+#JAVA_CMD="java -Xms1G -Xmx1G -cp build/classes/java/main:lib/*.jar data_structures.Main $*"
+
+if  hostname -f | grep -q -e 'fs.\.cm\.cluster' ; then
+  module load prun
+  echo "Running on DAS using prun."
+  exec prun -np 1 bash -c "module load java/jdk-17; $JAVA_CMD"
+else
+  echo "Running locally. Do not use this output for evaluation benchmarks!"
+  exec $JAVA_CMD
+fi

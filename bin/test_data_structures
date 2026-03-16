@@ -1,0 +1,13 @@
+#!/bin/bash
+
+JAVA_CMD="java -Xms1G -Xmx1G -cp lib/*.jar data_structures.tests.UnitTestRunner $*"
+#JAVA_CMD="java -Xms1G -Xmx1G -cp build/classes/java/main:lib/*.jar data_structures.tests.UnitTestRunner $*"
+
+if  hostname -f | grep -q -e 'fs.\.cm\.cluster' ; then
+  module load prun
+  echo "Running tests on DAS using prun."
+  exec prun -np 1 bash -c "module load java/jdk-17; $JAVA_CMD"
+else
+  echo "Running tests locally."
+  exec $JAVA_CMD
+fi
