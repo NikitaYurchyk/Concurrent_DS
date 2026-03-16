@@ -1,4 +1,4 @@
-## Project Overview
+# Project Overview
 
 This project implements four thread-safe sorted data structures in Java, each using a different synchronization strategy:
 
